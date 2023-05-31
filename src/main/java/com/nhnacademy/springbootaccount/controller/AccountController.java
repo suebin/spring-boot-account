@@ -2,34 +2,34 @@ package com.nhnacademy.springbootaccount.controller;
 
 import com.nhnacademy.springbootaccount.service.AccountService;
 import com.nhnacademy.springbootaccount.entity.Account;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
 
-    @GetMapping("/accounts")
+    @GetMapping
     public List<Account> getAccounts() {
         return accountService.getAccounts();
     }
 
-    @GetMapping("/accounts/{number}")
-    public Account getStudent(@PathVariable String number) {
+    @GetMapping("/{number}")
+    public Account getAccount(@PathVariable String number) {
         return accountService.getAccount(number);
     }
 
-    @PostMapping("/accounts")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Account createStudent(@RequestBody Account account) {
+    public Account createAccount(@RequestBody Account account) {
         return accountService.createAccount(account);
     }
 
-    @DeleteMapping("/accounts/{number}")
+    @DeleteMapping("/{number}")
     public String deleteAccount(@PathVariable String number) {
         accountService.deleteAccount(number);
         return "{\"result\":\"OK\"}";

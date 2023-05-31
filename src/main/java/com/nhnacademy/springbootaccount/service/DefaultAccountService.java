@@ -2,11 +2,10 @@ package com.nhnacademy.springbootaccount.service;
 
 import com.nhnacademy.springbootaccount.entity.Account;
 import com.nhnacademy.springbootaccount.repository.AccountRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +13,7 @@ public class DefaultAccountService implements AccountService {
     private final AccountRepository accountRepository;
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Account> getAccounts() {
         return accountRepository.findAll();
     }
@@ -23,13 +22,13 @@ public class DefaultAccountService implements AccountService {
     @Transactional
     public Account createAccount(Account account) {
         boolean present = accountRepository.findById(account.getNumber()).isPresent();
-        if ( present ) throw new IllegalStateException("already exist " + account.getNumber());
+        if (present) throw new IllegalStateException("already exist " + account.getNumber());
 
         return accountRepository.save(account);
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public Account getAccount(String number) {
         return accountRepository.findById(number).orElseThrow();
     }
